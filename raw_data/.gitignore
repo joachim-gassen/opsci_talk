@@ -1,0 +1,3 @@
+# Empty .gitignore to make the directory show up on git
+# Do not upload the scraped Wittgenstein data
+wicdf.csv
