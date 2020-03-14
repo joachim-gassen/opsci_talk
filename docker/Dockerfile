@@ -64,7 +64,7 @@ MAINTAINER Joachim Gassen "gassen@wiwi.hu-berlin.de"
 RUN apt-get update \
   && apt-get install -y --no-install-recommends apt-utils nano curl lbzip2 \
   cargo libudunits2-dev libgdal-dev libproj-dev  \
-  python3-pip python3-tk libpython3-dev ffmpeg imagemagick docker
+  python3-pip python3-tk libpython3-dev ffmpeg imagemagick
 
 
 # Install some additional tex packages
@@ -87,8 +87,8 @@ RUN ln -sf /usr/bin/python3 /usr/bin/python
 # And some R packages
 
 RUN  R -e "install.packages(c('kableExtra', 'ExPanDaR', 'tidyr', \
-  'tufte', 'showtext', 'cowplot', 'leaflet', 'widgetframe', \
-  'shiny', 'shinyjs', 'grid', 'gridExtra', 'ggwordcloud', 'tm', \
+  'tufte', 'showtext', 'cowplot', 'leaflet', 'widgetframe', 'htmlwidgets',  \
+  'shiny', 'shinyjs', 'grid', 'gridExtra', 'ggwordcloud', 'tm', 'RSelenium', \
   'qrcode', 'wbstats', 'magick', 'WDI', 'gganimate', 'directlabels', \
   'transformr', 'png', 'gifski', 'animation', 'reticulate', 'xtable'), \
   repos = c(CRAN = 'https://mran.microsoft.com/snapshot/2020-03-12'))"
@@ -101,3 +101,5 @@ ADD https://api.github.com/repos/joachim-gassen/opsci_talk/git/refs/heads/master
 # Clone the repository of the Open Science talk and setup a project in RStudio
 RUN cd /home/rstudio \
   && sudo -H -u rstudio git clone https://github.com/joachim-gassen/opsci_talk.git
+
+

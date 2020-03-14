@@ -33,7 +33,7 @@ smp_no_na <- smp_all %>% na.omit
 
 var_def <- read_csv("data/restrans_data_def.csv", col_types = cols())
 
-for (var in c("life_expectancy", "mn_yrs_school", 
+for (var in c("life_expectancy", "gdp_capita", 
               "mn_yrs_school", "unemployment")) {
   var_def <- rbind(var_def,
                    list(paste0(var, "_ln"), 
@@ -88,3 +88,10 @@ cat(sprintf(paste("\nMinium lower CI for effect of 10 %% increase in GDP",
 cat(sprintf(paste("\nMaximum upper CI for effect of 10 %% increase in GDP",
                   "on life expectancy in years: %.2f\n\n"), 
             max_est*log(1.1)))
+
+# --- Start ExPanD for exploration and robustness assessment -------------------
+
+conf_list <- readRDS("raw_data/ExPanD_config.RDS")
+ExPanD(smp_no_na, df_def = var_def, config_list = conf_list,
+       title = "Explore the Preston Curve", 
+       components = c(sample_selection = FALSE, missing_values = FALSE))

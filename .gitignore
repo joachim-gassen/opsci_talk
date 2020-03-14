@@ -39,5 +39,3 @@ rsconnect/
 *.Rproj
 *.html
 *.DS_Store
-*.pdf
-!/slides/media/*
