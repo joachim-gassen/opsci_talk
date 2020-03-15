@@ -121,5 +121,8 @@ COPY docker_rstudio_conf.tar.gz /home/rstudio/
 
 RUN cd /home/rstudio \
   && sudo -H -u rstudio tar xfvz docker_rstudio_conf.tar.gz \
-  && rm docker_rstudio_conf.tar.gz 
+  && rm docker_rstudio_conf.tar.gz
+  
+# delete the slides PDF so that it can be recreated
+RUN rm /home/rstudio/opsci_talk/slides/opsci_talk_slides.pdf
 
