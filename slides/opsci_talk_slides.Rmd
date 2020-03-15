@@ -349,7 +349,7 @@ Wicherts et al. (Frontiers in Psychology 2016: 3)
 \end{center}
 
 
-## Objective of the `rdfanalysis` package
+## Objective of the 'rdfanalysis' package
 
 Development of a statistical computing framework for a "multiverse analysis" (Steeger et al., Persp on Psych Sci 2016) that
 

@@ -53,7 +53,7 @@ also build the docker container from scratch using the Dockerfile in the `docker
 directory. Read it for further instructions.
 
 After the docker container has started, use your favorite web browser and
-point it to: `https://localhost:8787`. Log in with user 'rstudio' and your 
+point it to: `http://localhost:8787`. Log in with user 'rstudio' and your 
 password from above. Select "Build all" in the top right window. This will 
 re-generate the slides.
 

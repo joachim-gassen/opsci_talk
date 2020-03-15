@@ -55,7 +55,7 @@
 # It starts with an ubuntu based image that contains RStudio and the tidyverse
 # packages
 
-FROM rocker/verse:3.6.0
+FROM rocker/verse:3.6.2
 
 MAINTAINER Joachim Gassen "gassen@wiwi.hu-berlin.de" 
 
@@ -64,19 +64,21 @@ MAINTAINER Joachim Gassen "gassen@wiwi.hu-berlin.de"
 RUN apt-get update \
   && apt-get install -y --no-install-recommends apt-utils nano curl lbzip2 \
   cargo libudunits2-dev libgdal-dev libproj-dev  \
-  python3-pip python3-tk libpython3-dev ffmpeg imagemagick
+  python3-pip python3-tk libpython3-dev ffmpeg imagemagick 
 
 # Install some additional tex packages
-RUN tlmgr option repository http://mirror.ctan.org/systems/texlive/tlnet
 
+RUN tlmgr option repository ftp://tug.org/historic/systems/texlive/2018/tlnet-final
 RUN tlmgr update --self
-# RUN update-tlmgr-latest --update
+RUN tlmgr update --all
 
 RUN tlmgr install multirow xcolor colortbl wrapfig float tabu varwidth \
   threeparttable threeparttablex environ trimspaces ulem makecell endfloat \
-  setspace footmisc csquotes beamer translator adjustbox collectbox\
+  setspace footmisc csquotes beamer translator adjustbox collectbox \
   && tlmgr path add 
   
+RUN tlmgr update --self
+
 # Some python packages
 
 RUN pip3 install setuptools wheel 
