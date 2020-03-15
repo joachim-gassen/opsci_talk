@@ -33,12 +33,12 @@ library(zoo)
 pull_data <- FALSE
 
 if (!pull_data) {
-  files <- list.files("raw_data", "restrans_data_def_2", full.names = TRUE)
+  files <- list.files("raw_data", "case_study_data_def_2", full.names = TRUE)
   invisible(file.copy(files[length(files)], 
-                      "data/restrans_data_def.csv", overwrite = TRUE))
-  files <- list.files("raw_data", "restrans_data_2", full.names = TRUE)
+                      "data/case_study_data_def.csv", overwrite = TRUE))
+  files <- list.files("raw_data", "case_study_data_2", full.names = TRUE)
   invisible(file.copy(files[length(files)], 
-                      "data/restrans_data.csv", overwrite = TRUE))
+                      "data/case_study_data.csv", overwrite = TRUE))
 } else {
 
   # --- Pull world Bank Data ---------------------------------------------------
@@ -182,9 +182,9 @@ if (!pull_data) {
                                 "life_expectancy")
   df <- df[, c(1:5, 8, 6, 9, 7)]
   
-  write_csv(df, paste0("raw_data/restrans_data_", 
+  write_csv(df, paste0("raw_data/case_study_data_", 
                        substr(Sys.time(), 1, 10), ".csv"))
-  write_csv(df, "data/restrans_data.csv")
+  write_csv(df, "data/case_study_data.csv")
   
   data_def <- wb_data_def[c(1, 3:6, 9, 7, 8), ] %>%
     add_row(var_name = "mn_yrs_school", 
@@ -200,7 +200,7 @@ if (!pull_data) {
   data_def$var_name[c(6, 7, 9)] <- c("life_expectancy", "gdp_capita", 
                                      "unemployment")
   
-  write_csv(data_def, paste0("raw_data/restrans_data_def_", 
+  write_csv(data_def, paste0("raw_data/case_study_data_def_", 
                        substr(Sys.time(), 1, 10), ".csv"))
-  write_csv(data_def, "data/restrans_data_def.csv")
+  write_csv(data_def, "data/case_study_data_def.csv")
 }  

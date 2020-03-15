@@ -61,14 +61,14 @@ source("../code/utils.R")
 ```
 
 ```{r prepare_data, include=FALSE}
-read_csv("../data/restrans_data.csv", col_types = cols()) %>%
+read_csv("../data/case_study_data.csv", col_types = cols()) %>%
   mutate_at(c("country", "year"), as.factor) %>%
   mutate_at(c("life_expectancy", "gdp_capita",
               "mn_yrs_school", "unemployment"), list(ln = log)) -> smp_all
 
 smp_no_na <- smp_all %>% na.omit
 
-var_def <- read_csv("../data/restrans_data_def.csv", col_types = cols())
+var_def <- read_csv("../data/case_study_data_def.csv", col_types = cols())
 
 for (var in c("life_expectancy", "mn_yrs_school", 
               "mn_yrs_school", "unemployment")) {
@@ -311,7 +311,7 @@ that did not include later sharing of the data
 leading to data that only experts in the field are able to find and understand
 - Lack of clear identifiers for main units of analyses make it inherently hard 
 to merge data from different sources
-- Lack of information on data generating processes reduces reusability
+- Lack of information on data generating processes reduces re-usability
 
 
 # Working around unFAIR data: \break The 'ExPanDaR' package
@@ -354,7 +354,6 @@ Wicherts et al. (Frontiers in Psychology 2016: 3)
 Development of a statistical computing framework for a "multiverse analysis" (Steeger et al., Persp on Psych Sci 2016) that
 
 - supports research design development separate from data,
-- supports pre-registering of observational data research designs,
 - facilitates a priori power analysis,
 - promotes unit testing,
 - generates well documented and easily portable code,
@@ -366,29 +365,21 @@ Note: Code based walk-through on what follows: https://joachim-gassen.github.io/
 
 ## Workflow
 
-1. Sketch the \textcolor{black}{\code{design}}, the \textcolor{trr266yellow}{\code{result}} and the required \textcolor{trr266petrol}{\code{steps}} to generate it
-2. Develop test code for \textcolor{gray}{\code{input}} data
-3. Develop function to simulate \textcolor{gray}{\code{input}} data. Verify it with test code
-4. For each \textcolor{trr266petrol}{\code{step}}
-    - Draft \textcolor{trr266petrol}{\code{step\_description}} and develop test code
-    - Identify and implement potential \textcolor{trr266blue}{\code{choices}}. Document them by providing the \textcolor{trr266blue}{\code{choice\_description}}
-    - Verify that \textcolor{trr266petrol}{\code{step}} passes tests
-5. Verify that \textcolor{black}{\code{design}} produces unbiased \textcolor{trr266yellow}{\code{results}} consistent with simulated effect sizes
-6. Run power simulation with your a priori estimation of effect size
-7. Register your priors about choices by assigning \textcolor{gray}{\code{weights}}
-8. Run \textcolor{black}{\code{design}} with real data and interpret \textcolor{trr266yellow}{\code{result}}
-
-
-## Implementation of a \textcolor{black}{\code{design}}
-
-* A `design` consists of  \textcolor{trr266petrol}{\code{steps}}. 
-* Each \textcolor{trr266petrol}{\code{step}} reads the \textcolor{gray}{\code{output}} of the prior \textcolor{trr266petrol}{\code{step}} as \textcolor{gray}{\code{input}} and can contain any number of 
-    - \textcolor{trr266blue}{\code{discrete choices}} and
-    - \textcolor{trr266red}{\code{continuous choices}}
-* The output of the final \textcolor{trr266petrol}{\code{step}} provides the \textcolor{trr266yellow}{\code{result}}
-* By referring to the \textcolor{gray}{\code{protocol}} of prior \textcolor{gray}{\code{choices}}, this set-up can be used to design arbitrarily complex forking paths (Gelman and Loken, Am Scientist 2011)
-
-
+1. Develop your \textcolor{black}{\code{design}} by specifying
+the \textcolor{trr266yellow}{\code{result}} that you want to estimate and the 
+required \textcolor{trr266petrol}{\code{steps}} to do that.
+2. The package generates a code skeleton based on your 
+\textcolor{black}{\code{design}}.
+3. Implement each \textcolor{trr266petrol}{\code{step}} starting from this
+skeleton. Assign positive weights to all design choices that you consider to
+be supported best by theory ex ante.
+4. Use package functions to document and test your code for internal consistency.
+5. Optional: Run code on simulated data to test its computational correctness and 
+assess the power of your \textcolor{black}{\code{design}}.
+6. Run \textcolor{black}{\code{design}} with real data and generate a weighted estimate of the \textcolor{trr266yellow}{\code{result}}.
+7. Exhaust \textcolor{black}{\code{design}} across all 
+\textcolor{trr266red}{\code{protocols}} and use the
+visualization tools of the package to assess the robustness of your \textcolor{trr266yellow}{\code{result}} across all researcher degrees of freedom.
 
 
 ## The case steps and their discrete/continuous choices
@@ -398,10 +389,10 @@ Note: Code based walk-through on what follows: https://joachim-gassen.github.io/
 \end{center}
 
 
-## Estimate the effect size for the main protocols
+## Estimate the effect size for the weighted protocols
 
 ``` {r exhaust_weighted_ests, include = "FALSE", results = "hide"}
-load(url("https://joachim-gassen.github.io/data/rdf_ests.RData"))
+load("../raw_data/case_study_results.Rdata")
 ```
 ``` {r table_weighted_results, echo = FALSE, results='asis'}
 
@@ -446,10 +437,18 @@ https://jgassen.shinyapps.io/shiny_rdf_spec_curve/
 
 \ecenter
 
+
 ## For further info and code
 
-\bcenter
+* Code for this talk: \textcolor{beamer@blendedblue}{\url{https://github.com/joachim-gassen/opsci_talk}}
 
-https://joachim-gassen.github.io/rdfanalysis
+* 'ExPanDaR' package: \textcolor{beamer@blendedblue}{\url{https://joachim-gassen.github.io/ExPanDaR}}
 
-\ecenter
+* 'rdfanalysis' package: \textcolor{beamer@blendedblue}{\url{https://joachim-gassen.github.io/rdfanalysis}}
+
+* Online course for open science methods: \textcolor{beamer@blendedblue}{\url{https://github.com/joachim-gassen/sposm}}
+
+* Blog on R and Open Science 
+\textcolor{beamer@blendedblue}{\url{https://joachim-gassen.github.io}}
+
+* Twitter: \textcolor{beamer@blendedblue}{\url{https://twitter.com/JoachimGassen}}

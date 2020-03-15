@@ -25,14 +25,14 @@ display_html_viewer <- function(raw_html) {
 
 # --- Prepare Sample -----------------------------------------------------------
 
-read_csv("data/restrans_data.csv", col_types = cols()) %>%
+read_csv("data/case_study_data.csv", col_types = cols()) %>%
   mutate_at(c("country", "year"), as.factor) %>%
   mutate_at(c("life_expectancy", "gdp_capita",
               "mn_yrs_school", "unemployment"), list(ln = log)) -> smp_all
 
 smp_no_na <- smp_all %>% na.omit
 
-var_def <- read_csv("data/restrans_data_def.csv", col_types = cols())
+var_def <- read_csv("data/case_study_data_def.csv", col_types = cols())
 
 for (var in c("life_expectancy", "gdp_capita", 
               "mn_yrs_school", "unemployment")) {

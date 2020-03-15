@@ -39,3 +39,7 @@ rsconnect/
 *.Rproj
 *.html
 *.DS_Store
+slides/*.log
+slides/*.tex
+slides/*_cache
+slides/*_files

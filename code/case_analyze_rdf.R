@@ -4,7 +4,7 @@
 #     gassen@wiwi.hu-berlin.de
 #     See LICENSE file for details
 #
-# This file analyses the researcher degrees of freedom for the Preston
+# This file analyzes the researcher degrees of freedom for the Preston
 # curve case. It uses the {rdfanalysis} package
 # See https://joachim-gassen.github.io/rdfanalysis/articles/analyzing_rdf.html
 # for more detail
@@ -26,20 +26,20 @@ design <- c(
 )
 
 # Source the step functions
-source_design(design, rel_dir = "code/case_study_code")
+source_design(design, rel_dir = "code/case_study_rdf_code")
 
 # Test the design for internal validity
 test_design(design)
 
 # Generate a code documentation
-prepare_design_documentation(design, "output/case_preston_code_doc.pdf")
+prepare_design_documentation(design, "output/case_study_rdf_code_doc.pdf")
 
 # Generate a visual that displays steps and their options as a flow chart
-prepare_design_flow_chart(design, "output/case_preston_design_chart.pdf")
+prepare_design_flow_chart(design, "output/case_study_rdf_design_chart.pdf")
 
 # Run the protocols with positive weight
 weighted_ests <- exhaust_design(
-  design, "data/restrans_data.csv",
+  design, "data/case_study_data.csv",
   weight = TRUE
 )
 
@@ -52,7 +52,7 @@ calculate_weighted_estimate(weighted_ests, "est", "lb", "ub")
 # Look at a selected protocoll
 
 res <-
-  read_data("data/restrans_data.csv", "yes") %>%
+  read_data("data/case_study_data.csv", "yes") %>%
   select_idvs("full") %>%
   treat_extreme_obs(list("win", 0)) %>%
   specify_model("level-log") %>%
@@ -61,10 +61,10 @@ res <-
 summary(res$model)
 
 # Run all protocols. This can take up to an hour so please be patient.
-ests <- exhaust_design(design, "data/restrans_data.csv")
+ests <- exhaust_design(design, "data/case_study_data.csv")
 
 # Store the results for future use
-save(weighted_ests, ests, file = "data/case_study_results.Rdata")
+save(weighted_ests, ests, file = "raw_data/case_study_results.Rdata")
 
 # Plot a specification curve as suggested by Simonsohn, Simmons and Nelson (2019)
 plot_rdf_spec_curve(ests, "est", "lb", "ub")
@@ -74,10 +74,10 @@ plot_rdf_spec_curve(ests, "est", "lb", "ub")
 shiny_rdf_spec_curve(
   ests, list("est", "lb", "ub", choice_ind_point = FALSE,
              est_label = "GDP effect [years]"),
-  design, "vignettes/case_study_code",
-  start_input = "wb_new.csv",
-  libs = list("ExPanDaR"), add_files = data_file,
-  default_choices = list(na.omit = "no",
+  design, "code/case_study_rdf_code",
+  start_input = "case_study_data.csv",
+  libs = list("ExPanDaR"), add_files = "data/case_study_data.csv",
+  default_choices = list(na.omit = "yes",
                          idvs = "full",
                          outlier_tment_style ="win",
                          outlier_cutoff = 0,
