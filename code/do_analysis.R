@@ -8,6 +8,7 @@
 # for the case study used in the talk
 # --- Setup --------------------------------------------------------------------
 
+library(dplyr)
 library(readr)
 library(tidyr)
 library(ExPanDaR)

@@ -81,7 +81,8 @@ for (var in c("life_expectancy", "mn_yrs_school",
 ## Agenda
 
 - What is open science and why should we care?
-- Sorry but your code does not run: Research Containers 
+- Introducing our case: The Preston curve
+- Sorry but your code does not run: Research containers 
 - Making data FAIR: Issues in economics
 - Working around unFAIR data: The 'ExPanDaR' package
 - Increase research transparency: The 'rdfanalysis' package
@@ -148,8 +149,9 @@ Therefore, contemporary science could be more accurately portrayed as facing “
 - Python
 - ...
 
+# Introducing our case: \break The Preston curve
 
-## Our case study: Meet the Preston Curve
+## Life expectancy is associated with GDP per capita
 
 \begin{center}
 \includegraphics[height=0.7\textheight]{media/preston_1975_p235.png}
@@ -158,120 +160,7 @@ of Economic Development, Population Studies (29): 235.
 \end{center}
 
 
-# Sorry but your code does not run: \break Research Containers 
-
-## What is the problem?
-
-- All code is based on a development environment (e.g., your computer)
-- Not everybody has access to your development environment (matter of factly
-most likely nobody has)
-- Designing projects so that they can be easily ported across environments is hard.
-Too hard for most of us.
-- The easier way: Develop your project and its code in a standardized environment. 
-Ship that environment with your code.
-
-
-## Meet Docker
-
-\begin{center}
-\includegraphics[width=0.3\textwidth]{media/docker_logo_400x400.png} 
-\end{center}
-* Take a look at this file: https://github.com/joachim-gassen/opsci_talk/blob/master/docker/Dockerfile
-
-
-# Making data FAIR: Issues in economics
-
-## What makes data FAIR?
-
-- Data is easily \textcolor{trr266petrol}{findable} both by experts in the field 
-and by researchers from other domains
-
-- Data is \textcolor{trr266petrol}{accessible} for interested researchers 
-meaning that they can access and understand the data
-
-- Data is \textcolor{trr266petrol}{inter-operable} so that it can be merged with 
-other data sources
-
-- Data is \textcolor{trr266petrol}{reusable} so that it can be used for other
-research projects  besides the research project for which they were initially
-collected
-
-
-## Why is it hard to establish FAIR data in economics?
-
-- Many data are commercialized, especially in the area of capital markets
-- Survey data often contains personal information 
-- Experimental data is collected based on informed consent from participants
-that did not include later sharing of the data
-- Data is stored on author's web pages or similar, with very little meta data,
-leading to data that only experts in the field are able to find and understand
-- Lack of clear identifiers for main units of analyses make it inherently hard 
-to merge data from different sources
-- Lack of information on data generating processes reduces reusability
-
-
-# Working around unFAIR data: \break The 'ExPanDaR' package
-
-
-# Increase research transparency: \break The 'rdfanalysis' package
-
-## Empirical research requires making choices
-
-\begin{center}
-\includegraphics[height=0.7\textheight]{media/leamer_aer_1983_37f.png} \\
-Leamer (AER 1983: 37f.)
-\end{center}
-
-
-## Slightly more systematic ...
-
-\begin{center}
-\includegraphics[height=0.8\textheight]{media/wicherts_et_al_2016_table_1_p3.png} \\
-Wicherts et al. (Frontiers in Psychology 2016: 3)
-\end{center}
-
-
-## Objective of the `rdfanalysis` package
-
-Development of a statistical computing framework for a "multiverse analysis" (Steeger et al., Persp on Psych Sci 2016) that
-
-- supports research design development separate from data,
-- supports pre-registering of observational data research designs,
-- facilitates a priori power analysis,
-- promotes unit testing,
-- generates well documented and easily portable code,
-- makes researcher degrees of freedom (Simmons et al., Psyc Science 2011) explicit in code, and
-- allows for rigorous robustness checking by exhausting all these degrees of freedom algorithmically. 
-
-Note: Code based walk-through on what follows: https://joachim-gassen.github.io/rdfanalysis/articles/analyzing_rdf.html
-
-
-## Workflow
-
-1. Sketch the \textcolor{black}{\code{design}}, the \textcolor{trr266yellow}{\code{result}} and the required \textcolor{trr266petrol}{\code{steps}} to generate it
-2. Develop test code for \textcolor{gray}{\code{input}} data
-3. Develop function to simulate \textcolor{gray}{\code{input}} data. Verify it with test code
-4. For each \textcolor{trr266petrol}{\code{step}}
-    - Draft \textcolor{trr266petrol}{\code{step\_description}} and develop test code
-    - Identify and implement potential \textcolor{trr266blue}{\code{choices}}. Document them by providing the \textcolor{trr266blue}{\code{choice\_description}}
-    - Verify that \textcolor{trr266petrol}{\code{step}} passes tests
-5. Verify that \textcolor{black}{\code{design}} produces unbiased \textcolor{trr266yellow}{\code{results}} consistent with simulated effect sizes
-6. Run power simulation with your a priori estimation of effect size
-7. Register your priors about choices by assigning \textcolor{gray}{\code{weights}}
-8. Run \textcolor{black}{\code{design}} with real data and interpret \textcolor{trr266yellow}{\code{result}}
-
-
-## Implementation of a \textcolor{black}{\code{design}}
-
-* A `design` consists of  \textcolor{trr266petrol}{\code{steps}}. 
-* Each \textcolor{trr266petrol}{\code{step}} reads the \textcolor{gray}{\code{output}} of the prior \textcolor{trr266petrol}{\code{step}} as \textcolor{gray}{\code{input}} and can contain any number of 
-    - \textcolor{trr266blue}{\code{discrete choices}} and
-    - \textcolor{trr266red}{\code{continuous choices}}
-* The output of the final \textcolor{trr266petrol}{\code{step}} provides the \textcolor{trr266yellow}{\code{result}}
-* By referring to the \textcolor{gray}{\code{protocol}} of prior \textcolor{gray}{\code{choices}}, this set-up can be used to design arbitrarily complex forking paths (Gelman and Loken, Am Scientist 2011)
-
-
-## Descriptive Statistics for our case
+## Descriptive Statistics
 
 ```{r tab_descriptives_sample, echo = FALSE, results="asis", out.height="\\textheight"}
 df <- smp_no_na %>% 
@@ -373,14 +262,143 @@ cat("}")
 ```
 
 
-## The steps and their discrete/continuous choices
+# Sorry but your code does not run: \break Research containers 
+
+## What is the problem?
+
+- All code is based on a development environment (e.g., your computer)
+- Not everybody has access to your development environment (matter-of-factly
+most likely nobody has)
+- Designing projects so that they can be easily ported across environments is hard.
+Too hard for most of us.
+- The easier way: Develop your project and its code in a standardized environment. 
+Ship that environment with your code.
+
+
+## Meet Docker
+
+\begin{center}
+\includegraphics[width=0.3\textwidth]{media/docker_logo_400x400.png} 
+\end{center}
+* Take a look at this file: https://github.com/joachim-gassen/opsci_talk/blob/master/docker/Dockerfile
+
+
+# Making data FAIR: Issues in economics
+
+## What makes data FAIR?
+
+- Data is easily \textcolor{trr266petrol}{findable} both by experts in the field 
+and by researchers from other domains
+
+- Data is \textcolor{trr266petrol}{accessible} for interested researchers 
+meaning that they can access, understand and use the data
+
+- Data is \textcolor{trr266petrol}{inter-operable} so that it can be merged with 
+other data sources
+
+- Data is \textcolor{trr266petrol}{reusable} so that it can be used for other
+research projects  besides the research project for which they were initially
+collected
+
+
+## Why is it hard to establish FAIR data in economics?
+
+- Many data are commercialized, especially in the area of capital markets
+- Survey data often contains personal information 
+- Experimental data is collected based on informed consent from participants
+that did not include later sharing of the data
+- Data is stored on author's web pages or similar, with very little meta data,
+leading to data that only experts in the field are able to find and understand
+- Lack of clear identifiers for main units of analyses make it inherently hard 
+to merge data from different sources
+- Lack of information on data generating processes reduces reusability
+
+
+# Working around unFAIR data: \break The 'ExPanDaR' package
+
+## The idea
+
+- When data cannot be shared, you can still provide an interface to the data
+so that others can explore it
+- That way you enable users to assess the robustness of empirical evidence without providing them with access to the underlying data
+- Besides that, the 'ExPanDaR' package also provides a toolbox for researchers to explore data 
+on the fly, allowing them to download R notebook code that reflects their analysis
+
+## Meet the ExPanD app
+
+\begin{center}
+\includegraphics[height=0.7\textheight]{media/expand_preston.png} \\
+https://jgassen.shinyapps.io/preston
+\end{center}
+
+# Increase research transparency: \break The 'rdfanalysis' package
+
+## Empirical research requires making choices
+
+\begin{center}
+\includegraphics[height=0.7\textheight]{media/leamer_aer_1983_37f.png} \\
+Leamer (AER 1983: 37f.)
+\end{center}
+
+
+## Slightly more systematic ...
+
+\begin{center}
+\includegraphics[height=0.8\textheight]{media/wicherts_et_al_2016_table_1_p3.png} \\
+Wicherts et al. (Frontiers in Psychology 2016: 3)
+\end{center}
+
+
+## Objective of the `rdfanalysis` package
+
+Development of a statistical computing framework for a "multiverse analysis" (Steeger et al., Persp on Psych Sci 2016) that
+
+- supports research design development separate from data,
+- supports pre-registering of observational data research designs,
+- facilitates a priori power analysis,
+- promotes unit testing,
+- generates well documented and easily portable code,
+- makes researcher degrees of freedom (Simmons et al., Psyc Science 2011) explicit in code, and
+- allows for rigorous robustness checking by exhausting all these degrees of freedom algorithmically. 
+
+Note: Code based walk-through on what follows: https://joachim-gassen.github.io/rdfanalysis/articles/analyzing_rdf.html
+
+
+## Workflow
+
+1. Sketch the \textcolor{black}{\code{design}}, the \textcolor{trr266yellow}{\code{result}} and the required \textcolor{trr266petrol}{\code{steps}} to generate it
+2. Develop test code for \textcolor{gray}{\code{input}} data
+3. Develop function to simulate \textcolor{gray}{\code{input}} data. Verify it with test code
+4. For each \textcolor{trr266petrol}{\code{step}}
+    - Draft \textcolor{trr266petrol}{\code{step\_description}} and develop test code
+    - Identify and implement potential \textcolor{trr266blue}{\code{choices}}. Document them by providing the \textcolor{trr266blue}{\code{choice\_description}}
+    - Verify that \textcolor{trr266petrol}{\code{step}} passes tests
+5. Verify that \textcolor{black}{\code{design}} produces unbiased \textcolor{trr266yellow}{\code{results}} consistent with simulated effect sizes
+6. Run power simulation with your a priori estimation of effect size
+7. Register your priors about choices by assigning \textcolor{gray}{\code{weights}}
+8. Run \textcolor{black}{\code{design}} with real data and interpret \textcolor{trr266yellow}{\code{result}}
+
+
+## Implementation of a \textcolor{black}{\code{design}}
+
+* A `design` consists of  \textcolor{trr266petrol}{\code{steps}}. 
+* Each \textcolor{trr266petrol}{\code{step}} reads the \textcolor{gray}{\code{output}} of the prior \textcolor{trr266petrol}{\code{step}} as \textcolor{gray}{\code{input}} and can contain any number of 
+    - \textcolor{trr266blue}{\code{discrete choices}} and
+    - \textcolor{trr266red}{\code{continuous choices}}
+* The output of the final \textcolor{trr266petrol}{\code{step}} provides the \textcolor{trr266yellow}{\code{result}}
+* By referring to the \textcolor{gray}{\code{protocol}} of prior \textcolor{gray}{\code{choices}}, this set-up can be used to design arbitrarily complex forking paths (Gelman and Loken, Am Scientist 2011)
+
+
+
+
+## The case steps and their discrete/continuous choices
 
 \begin{center}
 \includegraphics[height=0.85\textheight]{media/rdf_design.png}
 \end{center}
 
 
-## Estimate the effect size on real data
+## Estimate the effect size for the main protocols
 
 ``` {r exhaust_weighted_ests, include = "FALSE", results = "hide"}
 load(url("https://joachim-gassen.github.io/data/rdf_ests.RData"))

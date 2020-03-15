@@ -66,15 +66,15 @@ RUN apt-get update \
   cargo libudunits2-dev libgdal-dev libproj-dev  \
   python3-pip python3-tk libpython3-dev ffmpeg imagemagick
 
-
 # Install some additional tex packages
 RUN tlmgr option repository http://mirror.ctan.org/systems/texlive/tlnet
 
 RUN tlmgr update --self
+# RUN update-tlmgr-latest --update
 
 RUN tlmgr install multirow xcolor colortbl wrapfig float tabu varwidth \
   threeparttable threeparttablex environ trimspaces ulem makecell endfloat \
-  setspace footmisc csquotes beamer translator\
+  setspace footmisc csquotes beamer translator adjustbox collectbox\
   && tlmgr path add 
   
 # Some python packages
@@ -85,15 +85,20 @@ RUN pip3 install pandas numpy matplotlib scipy seaborn
 RUN ln -sf /usr/bin/python3 /usr/bin/python
 
 # And some R packages
+# Normally, it would be better to use a snapshot repository to ensure
+# reproducibility but mran has been offline from time to time recently
+# c(CRAN = 'https://mran.microsoft.com/snapshot/2020-03-12')
 
-RUN  R -e "install.packages(c('kableExtra', 'ExPanDaR', 'tidyr', \
-  'tufte', 'showtext', 'cowplot', 'leaflet', 'widgetframe', 'htmlwidgets',  \
-  'shiny', 'shinyjs', 'grid', 'gridExtra', 'ggwordcloud', 'tm', 'RSelenium', \
-  'qrcode', 'wbstats', 'magick', 'WDI', 'gganimate', 'directlabels', \
-  'transformr', 'png', 'gifski', 'animation', 'reticulate', 'xtable'), \
-  repos = c(CRAN = 'https://mran.microsoft.com/snapshot/2020-03-12'))"
+RUN  R -e "install.packages(c('ExPanDaR', 'rvest', 'wbstats', 'zoo', \
+  'tufte', 'RSelenium', 'knitr', 'kableExtra', 'testthat'), \
+  repos = c(CRAN = 'https://cran.uni-muenster.de/'))"
 
+RUN R -e "devtools::install_github('joachim-gassen/rdfanalysis', \
+  repos = c(CRAN = 'https://cran.uni-muenster.de/'), upgrade = FALSE)"
+
+# Add TinyTex to R PATH 
 RUN chown -R rstudio:staff /opt/TinyTeX
+RUN sed -i '/^PATH=/ s/$/:\/opt\/TinyTeX\/bin\/x86_64-linux/' /usr/local/lib/R/etc/Renviron
 
 # The below invalidates the cache whenever the head of the Github repo changes
 ADD https://api.github.com/repos/joachim-gassen/opsci_talk/git/refs/heads/master version.json  
@@ -102,4 +107,17 @@ ADD https://api.github.com/repos/joachim-gassen/opsci_talk/git/refs/heads/master
 RUN cd /home/rstudio \
   && sudo -H -u rstudio git clone https://github.com/joachim-gassen/opsci_talk.git
 
+# Copy RStudio project and config files to docker
+# container so that RStudio starts directly into the project.
+# Created in the docker instance after setting up the project and quitting
+# the session:
+#
+# docker exec  -it --user rstudio opsci /bin/bash
+# cd && tar cfvz docker_rstudio_conf.tar.gz .rstudio opsci_talk/.Rproj.user opsci_talk/opsci_talk.Rproj
+
+COPY docker_rstudio_conf.tar.gz /home/rstudio/
+
+RUN cd /home/rstudio \
+  && sudo -H -u rstudio tar xfvz docker_rstudio_conf.tar.gz \
+  && rm docker_rstudio_conf.tar.gz 
 
