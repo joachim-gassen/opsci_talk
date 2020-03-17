@@ -95,4 +95,22 @@ cat(sprintf(paste("\nMaximum upper CI for effect of 10 %% increase in GDP",
 conf_list <- readRDS("raw_data/ExPanD_config.RDS")
 ExPanD(smp_no_na, df_def = var_def, config_list = conf_list,
        title = "Explore the Preston Curve", 
-       components = c(sample_selection = FALSE, missing_values = FALSE))
+       abstract = paste(
+         "<p>This display is part of an", 
+         "<a href=https://github.com/joachim-gassen/opsci_talk>online talk</a> ", 
+         "outlining an R/RStudio/Docker", 
+         "open science workflow. It uses the",
+         "<a href=https://en.wikipedia.org/wiki/Preston_curve> Preston Curve</a> ",
+         "<a href=https://www.tandfonline.com/doi/abs/10.1080/00324728.1975.10410201>(Preston, Pop Studies, 1975)</a>,",
+         "describing the positive association of country-level life expectancy",
+         "with national income as a case study.</p><p>",
+         "To explore this data, simply scroll down and make choices in the", 
+         "left panel. You can get more information about the variables by", 
+         "hovering over their names in the descriptive table.</p><p>",
+         "When you scroll down to the bottom of the page, you have the option", 
+         "to save its configuration or to save your analysis together with its", 
+         "data as an R notebook that you can use as a starting point for more", "
+         detailed analysis."
+       ), 
+       components = c(sample_selection = FALSE, missing_values = FALSE), 
+       export_nb_option = TRUE)

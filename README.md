@@ -20,6 +20,11 @@ You can follow/watch the video broadcast [here](https://bit.ly/39XIFk8).
 if you are simply looking for the slide deck, it is in the `slides` directory ;-)
 
 
+### Some links
+
+- Interactive display allowing the exploration of data: https://jgassen.shinyapps.io/explore_preston/
+- Interactive ‘specification curve’ allowing users to explore the robustness of empirical research designs: https://jgassen.shinyapps.io/shiny_rdf_spec_curve/
+
 ### About the repository
 
 In this repo, you will find
