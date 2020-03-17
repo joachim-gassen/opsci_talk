@@ -328,7 +328,7 @@ on the fly, allowing them to download R notebook code that reflects their analys
 
 \begin{center}
 \includegraphics[height=0.7\textheight]{media/expand_preston.png} \\
-https://jgassen.shinyapps.io/preston
+https://jgassen.shinyapps.io/expand\_preston
 \end{center}
 
 # Increase research transparency: \break The 'rdfanalysis' package
