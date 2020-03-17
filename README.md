@@ -5,12 +5,14 @@
 This repository contains the materials for a talk that I (Joachim 
 Gassen, Humboldt-Universität zu Berlin and 
 [TRR 266 "Accounting for Transparency"](https://www.accounting-for-transparency.de))
-have given at the [2020 VHB Conference](https://www.bwl2020.org).
+will give at the [2020 VHB Conference](https://www.bwl2020.org).
 
 The talk discusses open science related issues and presents a case-study based
-open science workflow using a containerized R/RStudio environment. It was 
-delivered online as the "offline conference" was canceled due to the COVID-19 
-outbreak. 
+open science workflow using a containerized R/RStudio environment. It is 
+delivered online as a video broadcast since the "offline conference" was 
+canceled due to the COVID-19 outbreak.
+
+You can follow/watch the video broadcast [here](https://bit.ly/39XIFk8).
 
 
 ### TL;DNR
