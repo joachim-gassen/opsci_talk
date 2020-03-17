@@ -87,16 +87,19 @@ RUN pip3 install pandas numpy matplotlib scipy seaborn
 RUN ln -sf /usr/bin/python3 /usr/bin/python
 
 # And some R packages
-# Normally, it would be better to use a snapshot repository to ensure
-# reproducibility but mran has been offline from time to time recently
+# We use a snapshot repository to ensure reproducibility but as mran 
+# has been offline from time to time recently if you run into problems
+# you can replace the repo link with a current repo below
 # c(CRAN = 'https://mran.microsoft.com/snapshot/2020-03-12')
+# c(CRAN = 'https://cran.uni-muenster.de/'))
 
 RUN  R -e "install.packages(c('ExPanDaR', 'rvest', 'wbstats', 'zoo', \
-  'tufte', 'RSelenium', 'knitr', 'kableExtra', 'testthat'), \
-  repos = c(CRAN = 'https://cran.uni-muenster.de/'))"
+  'tufte', 'RSelenium', 'knitr', 'kableExtra', 'testthat', \
+  'reticulate', 'png'), \
+  repos = c(CRAN = 'https://mran.microsoft.com/snapshot/2020-03-12'))"
 
 RUN R -e "devtools::install_github('joachim-gassen/rdfanalysis', \
-  repos = c(CRAN = 'https://cran.uni-muenster.de/'), upgrade = FALSE)"
+  repos = c(CRAN = 'https://mran.microsoft.com/snapshot/2020-03-12'))"
 
 # Add TinyTex to R PATH 
 RUN chown -R rstudio:staff /opt/TinyTeX
